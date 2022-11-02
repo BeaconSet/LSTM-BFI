@@ -11,8 +11,6 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from Model import train, predict
 
-frame = "pytorch"  # 可选： "keras", "pytorch", "tensorflow"
-
 '''
 if frame == "pytorch":
     from model.model_pytorch import train, predict
@@ -23,70 +21,77 @@ elif frame == "tensorflow":
     from model.model_tensorflow import train, predict
     os.environ["TF_CPP_MIN_LOG_LEVEL"] = '3'    # tf和keras下会有很多tf的warning，但不影响训练
 else:
-    raise Exception("Wrong frame seletion")
+    raise Exception("Wrong frame selection")
 '''
 class Config:
-    # 数据参数
-    feature_columns = [1, 2, 3, 4, 5]     # 要作为feature的列，按原数据从0开始计算，也可以用list 如 [2,4,6,8] 设置
-    label_columns = [4, 5]                  # 要预测的列，按原数据从0开始计算, 如同时预测第四，五列 最低价和最高价
-    # label_in_feature_index = [feature_columns.index(i) for i in label_columns]  # 这样写不行
-    label_in_feature_index = (lambda x,y: [x.index(i) for i in y])(feature_columns, label_columns)  # 因为feature不一定从0开始
+    ## data parameters
+    feature_columns = [1, 2, 3, 4, 5]     # select feature columns you want for input and output
+    label_columns = [4, 5]                  # columns for output
 
-    predict_day = 1             # 预测未来几天
+    label_in_feature_index = (lambda x,y: [x.index(i) for i in y])(feature_columns, label_columns)
 
-    # 网络参数
+    predict_day = 1
+    # the length of your output, this LSTM model is originally designed for stock price prediction,
+    # but I am too lazy to do correction. 変数名を変更したいなら、すべての所で変更すべきだ
+
+    ## network parameters
     input_size = len(feature_columns)
     output_size = len(label_columns)
 
-    hidden_size = 256           # LSTM的隐藏层大小，也是输出大小
-    lstm_layers = 2             # LSTM的堆叠层数
-    dropout_rate = 0.1          # dropout概率
-    time_step = 167              # 这个参数很重要，是设置用前多少天的数据来预测，也是LSTM的time step数，请保证训练数据量大于它
+    hidden_size = 256           # hidden layer size.2^nが推奨
+    lstm_layers = 2             # hidden layer数
+    dropout_rate = 0.1          # dropout rate
+    time_step = 167             # how much data used for training in one step
+    # For g2tau data, one trail has 501 points so I split each of them into 3 parts to seperate prior, middle, post period.
+    # Compared to time_step=501, 167の方の検証精度が良くなった
 
-    # 训练参数
+    ## training parameters
     do_train = True
     do_predict = True
-    add_train = False           # 是否载入已有模型参数进行增量训练
-    shuffle_train_data = True   # 是否对训练数据做shuffle
-    use_cuda = True          # 是否使用GPU训练
+    add_train = False           # haven't try this yet but should be able to add trained data to increase accuracy
+    shuffle_train_data = True   # shuffle flag, make sure this is true otherwise your training would be meaningless
+    use_cuda = True          # using GPU or not during training. set this to false if you don't have cuda installed
+    # Cuda installationと環境構築は私が作ったマニュアルに参考できる
 
-    train_data_rate = 0.9      # 训练数据占总体数据比例，测试数据就是 1-train_data_rate
-    valid_data_rate = 0.1      # 验证数据占训练数据比例，验证集在训练过程使用，为了做模型和参数选择
+    train_data_rate = 0.9
+    valid_data_rate = 0.1
+    # train-test data split for 9:1, similar to leave-one-out
 
-    batch_size = 501
-    learning_rate = 0.0001
-    epoch = 200                  # 整个训练集被训练多少遍，不考虑早停的前提下
-    patience = 3                # 训练多少epoch，验证集没提升就停掉
-    random_seed = 48            # 随机种子，保证可复现
+    batch_size = 501            # up to your dataset size
+    learning_rate = 0.0001     # important! try different rate to avoid overfitting
+    epoch = 200                 # max epoch number for training
+    patience = 3                # if loss hasn't been reduced for 3 times in a row then stop
+    random_seed = 48            # random seed to ensure the reproductivity
 
-    do_continue_train = False    # 每次训练把上一次的final_state作为下一次的init_state，仅用于RNN类型模型，目前仅支持pytorch
-    continue_flag = ""           # 但实际效果不佳，可能原因：仅能以 batch_size = 1 训练
+    do_continue_train = False    # 各batchの訓練で、前のbatchの結果を今回のinitiate stateとして使う
+    continue_flag = ""           # g2tau dataはtrailsが独立であって使用していなかった
     if do_continue_train:
         shuffle_train_data = False
         batch_size = 501
         continue_flag = "continue_"
 
-    # 训练模式
-    debug_mode = False  # 调试模式下，是为了跑通代码，追求快
-    debug_num = 500  # 仅用debug_num条数据来调试
+    ## debug mode
+    debug_mode = False  # for debug
+    debug_num = 500  #speedup to check warnings
 
-    # 框架参数
-    used_frame = frame  # 选择的深度学习框架，不同的框架模型保存后缀不一样
+    ## framework
+    used_frame = "pytorch"       # using pytorch for training
     model_postfix = {"pytorch": ".pth", "keras": ".h5", "tensorflow": ".ckpt"}
     model_name = "model_" + continue_flag + used_frame + model_postfix[used_frame]
 
-    # 路径参数
-    train_data_path = "./gtau2.3edited.csv"
-    model_save_path = "./checkpoint/" + used_frame + "/"
+    ## directory
+    train_data_path = "./gtau2.3edited.csv"       # dataset directory
+    model_save_path = "./checkpoint/" + used_frame + "/"        # trained-model saving directory
     figure_save_path = "./figure/"
     log_save_path = "./log/"
     do_log_print_to_screen = True
-    do_log_save_to_file = True                  # 是否将config和训练过程记录到log
+    do_log_save_to_file = True                    # save log or not
     do_figure_save = False
-    do_train_visualized = False
-    # 训练loss可视化，pytorch用visdom，tf用tensorboardX，实际上可以通用, keras没有
+    do_train_visualized = False                   # planned to do visualization but failed
+    # It would be delightful if any one can continue to do visualization work
+
     if not os.path.exists(model_save_path):
-        os.makedirs(model_save_path)    # makedirs 递归创建目录
+        os.makedirs(model_save_path)              # makedirs to make file if save path not exists
     if not os.path.exists(figure_save_path):
         os.mkdir(figure_save_path)
     if do_train and (do_log_save_to_file or do_train_visualized):
@@ -103,26 +108,28 @@ class Data:
         self.data_num = self.data.shape[0]
         self.train_num = int(self.data_num * self.config.train_data_rate)
 
-        self.mean = np.mean(self.data, axis=0)              # 数据的均值和方差
+        self.mean = np.mean(self.data, axis=0)              #　平均値と偏差
         self.std = np.std(self.data, axis=0)
-        self.norm_data = (self.data - self.mean)/self.std   # 归一化，去量纲
+        self.norm_data = (self.data - self.mean)/self.std   # データ正規化
 
-        self.start_num_in_test = 0      # 测试集中前几天的数据会被删掉，因为它不够一个time_step
+        self.start_num_in_test = 0
 
-    def read_data(self):                # 读取初始数据
+    ## データ読み取り
+    def read_data(self):
         if self.config.debug_mode:
             init_data = pd.read_csv(self.config.train_data_path, nrows=self.config.debug_num,
                                     usecols=self.config.feature_columns)
         else:
             init_data = pd.read_csv(self.config.train_data_path, usecols=self.config.feature_columns)
-        return init_data.values, init_data.columns.tolist()     # .columns.tolist() 是获取列名
+        return init_data.values, init_data.columns.tolist()     # .columns.tolist() はcolumnのラベルを読み取ること
 
     def get_train_and_valid_data(self):
         feature_data = self.norm_data[:self.train_num]
-        label_data = self.norm_data[:, self.config.label_in_feature_index]    # 将延后几天的数据作为label
+        label_data = self.norm_data[:, self.config.label_in_feature_index]
 
         if not self.config.do_continue_train:
-            # 在非连续训练模式下，每time_step行数据会作为一个样本，两个样本错开一行，比如：1-20行，2-21行。。。。
+            # every 501 data will be made into one sample and do training
+            # つまり、1~501,502~1002のようにデータを分離している
             train_x = [
                 feature_data[i * self.config.time_step: (i + 1) * self.config.time_step]
                 for i in range(self.train_num // self.config.time_step)]
@@ -133,10 +140,7 @@ class Data:
             # train_x = [feature_data[i:i+self.config.time_step] for i in range(self.train_num-self.config.time_step)]
             # train_y = [label_data[i:i+self.config.time_step] for i in range(self.train_num-self.config.time_step)]
         else:
-            # 在连续训练模式下，每time_step行数据会作为一个样本，两个样本错开time_step行，
-            # 比如：1-20行，21-40行。。。到数据末尾，然后又是 2-21行，22-41行。。。到数据末尾，……
-            # 这样才可以把上一个样本的final_state作为下一个样本的init_state，而且不能shuffle
-            # 目前本项目中仅能在pytorch的RNN系列模型中用
+            # ignore this part please
             '''train_x = [feature_data[start_index + i*self.config.time_step : start_index + (i+1)*self.config.time_step]
                        for start_index in range(self.config.time_step)
                        for i in range((self.train_num - start_index) // self.config.time_step)]
@@ -159,20 +163,23 @@ class Data:
 
         train_x, valid_x, train_y, valid_y = train_test_split(train_x, train_y, test_size=self.config.valid_data_rate,
                                                               random_state=self.config.random_seed,
-                                                              shuffle=self.config.shuffle_train_data)   # 划分训练和验证集，并打乱
+                                                              shuffle=self.config.shuffle_train_data)
+        # split train and validation and do the shuffle (in samples aspect)
+        # we had train and test splited before and this time we further split train dataset into train and valid
         return train_x, valid_x, train_y, valid_y
 
     def get_test_data(self, return_label_data=False):
         feature_data = self.norm_data[self.train_num:]
-        sample_interval = min(feature_data.shape[0], self.config.time_step)     # 防止time_step大于测试集数量
-        self.start_num_in_test = feature_data.shape[0] % sample_interval  # 这些天的数据不够一个sample_interval
+        sample_interval = min(feature_data.shape[0], self.config.time_step)     # prevent time_step > dataset size, designed for debug mode
+        self.start_num_in_test = feature_data.shape[0] % sample_interval  # abandon those left over for 1 sample
+        # e.q. dataset size is 1000, only 1 sample (501) will be took, and the first 499 points will be abandoned since they can't fill up 1 sample
+
         time_step_size = feature_data.shape[0] // sample_interval
 
-        # 在测试数据中，每time_step行数据会作为一个样本，两个样本错开time_step行
-        # 比如：1-20行，21-40行。。。到数据末尾。
+
         test_x = [feature_data[self.start_num_in_test+i*sample_interval : self.start_num_in_test+(i+1)*sample_interval]
                    for i in range(time_step_size)]
-        if return_label_data:       # 实际应用中的测试集是没有label数据的
+        if return_label_data:
             label_data = self.norm_data[self.train_num + self.start_num_in_test:, self.config.label_in_feature_index]
             return np.array(test_x), label_data
         return np.array(test_x)
@@ -198,7 +205,7 @@ def load_logger(config):
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
 
-        # 把config信息也记录到log 文件中
+        # record parameter settings in log file
         config_dict = {}
         for key in dir(config):
             if not key.startswith("_"):
@@ -214,14 +221,13 @@ def draw(config: Config, origin_data: Data, logger, predict_norm_data: np.ndarra
     label_data = origin_data.data[origin_data.train_num + origin_data.start_num_in_test : ,
                                             config.label_in_feature_index]
     predict_data = predict_norm_data * origin_data.std[config.label_in_feature_index] + \
-                   origin_data.mean[config.label_in_feature_index]   # 通过保存的均值和方差还原数据
+                   origin_data.mean[config.label_in_feature_index]
     assert label_data.shape[0] == predict_data.shape[0], "The element number in origin and predicted data is different"
 
     label_name = [origin_data.data_column_name[i] for i in config.label_in_feature_index]
     label_column_num = len(config.label_columns)
 
-    # label 和 predict 是错开config.predict_day天的数据的
-    # 下面是两种norm后的loss的计算方式，结果是一样的，可以简单手推一下
+    ## the following method of calculating accuracy will also do the job, you can try it if you want
     # label_norm_data = origin_data.norm_data[origin_data.train_num + origin_data.start_num_in_test:,
     #              config.label_in_feature_index]
     # loss_norm = np.mean((label_norm_data[config.predict_day:] - predict_norm_data[:-config.predict_day]) ** 2, axis=0)
@@ -230,16 +236,18 @@ def draw(config: Config, origin_data: Data, logger, predict_norm_data: np.ndarra
     loss = np.mean((label_data[config.predict_day:] - predict_data[:-config.predict_day] ) ** 2, axis=0)
     loss_norm = loss/(origin_data.std[config.label_in_feature_index] ** 2)
     average_label_data = np.mean(label_data[config.predict_day:])
-    # calculate the R square
+
     # print(np.shape(label_data))
     phantom = np.mean((label_data[config.predict_day:] - average_label_data) ** 2, axis=0)
-    Rsquared = 1 - loss/phantom
+    Rsquared = 1 - loss/phantom             # calculate the R square
     logger.info("The MSE of {} is ".format(label_name) + str(loss))
     logger.info("The mean squared error of {} is ".format(label_name) + str(loss_norm))
     logger.info("The R squared of {} is ".format(label_name) + str(Rsquared))
     label_X = range(origin_data.data_num - origin_data.train_num - origin_data.start_num_in_test)
     predict_X = [ x + config.predict_day for x in label_X]
     label_X_length = len(label_data[:, 0])
+
+    '''
     df = []
     a1 = []
     a2 = []
@@ -252,10 +260,12 @@ def draw(config: Config, origin_data: Data, logger, predict_norm_data: np.ndarra
         a4.append(predict_data[ii, 1])
     df = np.array([a1, a2, a3, a4])
     dataframe = pd.DataFrame(df.T)
-    # dataframe.to_csv("C:/Users/Liu Siwei/Desktop/DCS/Result.csv")
-    if not sys.platform.startswith('linux'):    # 无桌面的Linux下无法输出，如果是有桌面的Linux，如Ubuntu，可去掉这一行
+    dataframe.to_csv("C:/Users/Liu Siwei/Desktop/DCS/Result.csv")
+    '''
+
+    if not sys.platform.startswith('linux'):
         for i in range(label_column_num):
-            fig = plt.figure(i+1)                     # 预测数据绘制
+            fig = plt.figure(i+1)                     # plotting figures of bottom and above
             plt.plot(label_X[10:50000], label_data[10:50000, i], label='label')
             plt.plot(predict_X[10:50000], predict_data[10:50000, i], label='predict')
             plt.title("Predict {} velocity".format(label_name[i]))
@@ -271,7 +281,7 @@ def main(config):
     starttime = time.time()
     logger = load_logger(config)
     try:
-        np.random.seed(config.random_seed)  # 设置随机种子，保证可复现
+        np.random.seed(config.random_seed)  # implement random seed
         data_gainer = Data(config)
 
         if config.do_train:
@@ -280,7 +290,7 @@ def main(config):
 
         if config.do_predict:
             test_X, test_Y = data_gainer.get_test_data(return_label_data=True)
-            pred_result = predict(config, test_X)       # 这里输出的是未还原的归一化预测数据
+            pred_result = predict(config, test_X)       # this result hasn't be sent back to do regulation
             draw(config, data_gainer, logger, pred_result)
     except Exception:
         logger.error("Run Error", exc_info=True)

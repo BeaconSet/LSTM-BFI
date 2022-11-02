@@ -7,8 +7,7 @@ import numpy as np
 
 class Net(Module):
     '''
-    pytorch预测模型，包括LSTM时序预测层和Linear回归输出层
-    可以根据自己的情况增加模型结构
+    pytorch model for LSTM
     '''
     def __init__(self, config):
         super(Net, self).__init__()
