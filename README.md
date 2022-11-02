@@ -6,6 +6,9 @@ Diffuse correlation spectroscopy (DCS) is a noninvasive technique that derives b
 <p align="center">
   <img src="/figure/g2tau1.JPG/">
 </p>
+<p align="center" href="">
+  Fig 1. g2tau curves, all 3 trails were under the same blood velocity circumstance and recorded simultaneously.
+</p>
 We imported 691 pieces of DCS g2tau time-series data, each contains 3 trials (1cm, 2cm, 3cm DCS) and being fully labeled. These phantom data will be fed into the LSTM model and BFI prediction will be produced. Read the main.py for further information.
 
 
