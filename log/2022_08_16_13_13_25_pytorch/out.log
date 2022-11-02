@@ -1,0 +1,106 @@
+2022-08-16 13:13:25,551 - INFO - 
+Config:
+'add_train': False
+'batch_size': 501
+'continue_flag': ''
+'cur_time': '2022_08_16_13_13_25'
+'debug_mode': False
+'debug_num': 500
+'do_continue_train': False
+'do_figure_save': False
+'do_log_print_to_screen': True
+'do_log_save_to_file': True
+'do_predict': True
+'do_train': True
+'do_train_visualized': False
+'dropout_rate': 0.1
+'epoch': 200
+'feature_columns': [1, 2, 3, 4, 5]
+'figure_save_path': './figure/'
+'hidden_size': 256
+'input_size': 5
+'label_columns': [4, 5]
+'label_in_feature_index': [3, 4]
+'learning_rate': 0.0001
+'log_save_path': './log/2022_08_16_13_13_25_pytorch/'
+'lstm_layers': 2
+'model_name': 'model_pytorch.pth'
+'model_postfix': {'pytorch': '.pth'
+'keras': '.h5'
+'tensorflow': '.ckpt'}
+'model_save_path': './checkpoint/pytorch/'
+'output_size': 2
+'patience': 3
+'predict_day': 1
+'random_seed': 48
+'shuffle_train_data': True
+'time_step': 167
+'train_data_path': './gtau2.3edited.csv'
+'train_data_rate': 0.9
+'use_cuda': True
+'used_frame': 'pytorch'
+'valid_data_rate': 0.1
+2022-08-16 13:13:31,347 - INFO - Epoch 0/200
+2022-08-16 13:13:32,958 - INFO - The train loss is 0.970933. The valid loss is 1.056469.
+2022-08-16 13:13:32,967 - INFO - Epoch 1/200
+2022-08-16 13:13:33,961 - INFO - The train loss is 0.956679. The valid loss is 1.040650.
+2022-08-16 13:13:33,967 - INFO - Epoch 2/200
+2022-08-16 13:13:34,966 - INFO - The train loss is 0.942323. The valid loss is 1.024437.
+2022-08-16 13:13:34,971 - INFO - Epoch 3/200
+2022-08-16 13:13:35,966 - INFO - The train loss is 0.927540. The valid loss is 1.007417.
+2022-08-16 13:13:35,971 - INFO - Epoch 4/200
+2022-08-16 13:13:36,965 - INFO - The train loss is 0.911897. The valid loss is 0.989123.
+2022-08-16 13:13:36,970 - INFO - Epoch 5/200
+2022-08-16 13:13:37,962 - INFO - The train loss is 0.894953. The valid loss is 0.969011.
+2022-08-16 13:13:37,967 - INFO - Epoch 6/200
+2022-08-16 13:13:38,966 - INFO - The train loss is 0.876233. The valid loss is 0.946447.
+2022-08-16 13:13:38,971 - INFO - Epoch 7/200
+2022-08-16 13:13:39,963 - INFO - The train loss is 0.855172. The valid loss is 0.920663.
+2022-08-16 13:13:39,968 - INFO - Epoch 8/200
+2022-08-16 13:13:40,965 - INFO - The train loss is 0.830961. The valid loss is 0.890714.
+2022-08-16 13:13:40,970 - INFO - Epoch 9/200
+2022-08-16 13:13:41,973 - INFO - The train loss is 0.802771. The valid loss is 0.855413.
+2022-08-16 13:13:41,978 - INFO - Epoch 10/200
+2022-08-16 13:13:43,014 - INFO - The train loss is 0.769409. The valid loss is 0.813251.
+2022-08-16 13:13:43,019 - INFO - Epoch 11/200
+2022-08-16 13:13:44,021 - INFO - The train loss is 0.729669. The valid loss is 0.762290.
+2022-08-16 13:13:44,026 - INFO - Epoch 12/200
+2022-08-16 13:13:45,026 - INFO - The train loss is 0.681441. The valid loss is 0.700025.
+2022-08-16 13:13:45,031 - INFO - Epoch 13/200
+2022-08-16 13:13:46,035 - INFO - The train loss is 0.622578. The valid loss is 0.623275.
+2022-08-16 13:13:46,052 - INFO - Epoch 14/200
+2022-08-16 13:13:47,051 - INFO - The train loss is 0.550223. The valid loss is 0.528505.
+2022-08-16 13:13:47,056 - INFO - Epoch 15/200
+2022-08-16 13:13:48,060 - INFO - The train loss is 0.461435. The valid loss is 0.414509.
+2022-08-16 13:13:48,065 - INFO - Epoch 16/200
+2022-08-16 13:13:49,067 - INFO - The train loss is 0.357181. The valid loss is 0.294446.
+2022-08-16 13:13:49,072 - INFO - Epoch 17/200
+2022-08-16 13:13:50,099 - INFO - The train loss is 0.255255. The valid loss is 0.218077.
+2022-08-16 13:13:50,103 - INFO - Epoch 18/200
+2022-08-16 13:13:51,106 - INFO - The train loss is 0.197817. The valid loss is 0.199195.
+2022-08-16 13:13:51,111 - INFO - Epoch 19/200
+2022-08-16 13:13:52,116 - INFO - The train loss is 0.174291. The valid loss is 0.172263.
+2022-08-16 13:13:52,120 - INFO - Epoch 20/200
+2022-08-16 13:13:53,124 - INFO - The train loss is 0.148604. The valid loss is 0.135840.
+2022-08-16 13:13:53,129 - INFO - Epoch 21/200
+2022-08-16 13:13:54,133 - INFO - The train loss is 0.116798. The valid loss is 0.106251.
+2022-08-16 13:13:54,138 - INFO - Epoch 22/200
+2022-08-16 13:13:55,141 - INFO - The train loss is 0.091992. The valid loss is 0.086626.
+2022-08-16 13:13:55,145 - INFO - Epoch 23/200
+2022-08-16 13:13:56,156 - INFO - The train loss is 0.075930. The valid loss is 0.071772.
+2022-08-16 13:13:56,160 - INFO - Epoch 24/200
+2022-08-16 13:13:57,164 - INFO - The train loss is 0.063490. The valid loss is 0.059634.
+2022-08-16 13:13:57,169 - INFO - Epoch 25/200
+2022-08-16 13:13:58,176 - INFO - The train loss is 0.053118. The valid loss is 0.051108.
+2022-08-16 13:13:58,180 - INFO - Epoch 26/200
+2022-08-16 13:13:59,183 - INFO - The train loss is 0.046116. The valid loss is 0.047188.
+2022-08-16 13:13:59,190 - INFO - Epoch 27/200
+2022-08-16 13:14:00,198 - INFO - The train loss is 0.043179. The valid loss is 0.047362.
+2022-08-16 13:14:00,198 - INFO - Epoch 28/200
+2022-08-16 13:14:01,201 - INFO - The train loss is 0.043030. The valid loss is 0.048582.
+2022-08-16 13:14:01,201 - INFO - Epoch 29/200
+2022-08-16 13:14:02,204 - INFO - The train loss is 0.043104. The valid loss is 0.048150.
+2022-08-16 13:14:02,204 - INFO -  The training stops early in epoch 29
+2022-08-16 13:14:03,220 - INFO - The MSE of ['top', 'bottom'] is [ 5.76641556 11.66640106]
+2022-08-16 13:14:03,220 - INFO - The mean squared error of ['top', 'bottom'] is [0.01294138 0.03543907]
+2022-08-16 13:14:03,220 - INFO - The R squared of ['top', 'bottom'] is [0.98820911 0.96936396]

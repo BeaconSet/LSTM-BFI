@@ -1,0 +1,95 @@
+2022-07-06 01:16:13,728 - INFO - 
+Config:
+'add_train': False
+'batch_size': 334
+'continue_flag': ''
+'cur_time': '2022_07_06_01_16_13'
+'debug_mode': False
+'debug_num': 500
+'do_continue_train': False
+'do_figure_save': False
+'do_log_print_to_screen': True
+'do_log_save_to_file': True
+'do_predict': True
+'do_train': True
+'do_train_visualized': False
+'dropout_rate': 0.1
+'epoch': 25
+'feature_columns': [1, 2, 3, 4, 5]
+'figure_save_path': './figure/'
+'hidden_size': 256
+'input_size': 5
+'label_columns': [4, 5]
+'label_in_feature_index': [3, 4]
+'learning_rate': 0.0001
+'log_save_path': './log/2022_07_06_01_16_13_pytorch/'
+'lstm_layers': 2
+'model_name': 'model_pytorch.pth'
+'model_postfix': {'pytorch': '.pth'
+'keras': '.h5'
+'tensorflow': '.ckpt'}
+'model_save_path': './checkpoint/pytorch/'
+'output_size': 2
+'patience': 3
+'predict_day': 1
+'random_seed': 23
+'shuffle_train_data': True
+'time_step': 167
+'train_data_path': './gtau2.3edited.csv'
+'train_data_rate': 0.9
+'use_cuda': True
+'used_frame': 'pytorch'
+'valid_data_rate': 0.1
+2022-07-06 01:16:16,069 - INFO - Epoch 0/25
+2022-07-06 01:16:16,626 - INFO - The train loss is 1.001714. The valid loss is 1.004974.
+2022-07-06 01:16:16,630 - INFO - Epoch 1/25
+2022-07-06 01:16:16,925 - INFO - The train loss is 0.982297. The valid loss is 0.985549.
+2022-07-06 01:16:16,930 - INFO - Epoch 2/25
+2022-07-06 01:16:17,219 - INFO - The train loss is 0.962326. The valid loss is 0.964966.
+2022-07-06 01:16:17,224 - INFO - Epoch 3/25
+2022-07-06 01:16:17,515 - INFO - The train loss is 0.940781. The valid loss is 0.942174.
+2022-07-06 01:16:17,520 - INFO - Epoch 4/25
+2022-07-06 01:16:17,809 - INFO - The train loss is 0.916663. The valid loss is 0.915922.
+2022-07-06 01:16:17,814 - INFO - Epoch 5/25
+2022-07-06 01:16:18,108 - INFO - The train loss is 0.888483. The valid loss is 0.884634.
+2022-07-06 01:16:18,113 - INFO - Epoch 6/25
+2022-07-06 01:16:18,406 - INFO - The train loss is 0.854661. The valid loss is 0.846263.
+2022-07-06 01:16:18,410 - INFO - Epoch 7/25
+2022-07-06 01:16:18,702 - INFO - The train loss is 0.812769. The valid loss is 0.798111.
+2022-07-06 01:16:18,706 - INFO - Epoch 8/25
+2022-07-06 01:16:19,005 - INFO - The train loss is 0.760000. The valid loss is 0.736661.
+2022-07-06 01:16:19,010 - INFO - Epoch 9/25
+2022-07-06 01:16:19,326 - INFO - The train loss is 0.692485. The valid loss is 0.657615.
+2022-07-06 01:16:19,331 - INFO - Epoch 10/25
+2022-07-06 01:16:19,622 - INFO - The train loss is 0.605953. The valid loss is 0.556532.
+2022-07-06 01:16:19,627 - INFO - Epoch 11/25
+2022-07-06 01:16:19,918 - INFO - The train loss is 0.497268. The valid loss is 0.431145.
+2022-07-06 01:16:19,923 - INFO - Epoch 12/25
+2022-07-06 01:16:20,226 - INFO - The train loss is 0.368166. The valid loss is 0.291442.
+2022-07-06 01:16:20,230 - INFO - Epoch 13/25
+2022-07-06 01:16:20,551 - INFO - The train loss is 0.242410. The valid loss is 0.186620.
+2022-07-06 01:16:20,555 - INFO - Epoch 14/25
+2022-07-06 01:16:20,850 - INFO - The train loss is 0.166706. The valid loss is 0.148272.
+2022-07-06 01:16:20,854 - INFO - Epoch 15/25
+2022-07-06 01:16:21,160 - INFO - The train loss is 0.131473. The valid loss is 0.128603.
+2022-07-06 01:16:21,165 - INFO - Epoch 16/25
+2022-07-06 01:16:21,453 - INFO - The train loss is 0.104208. The valid loss is 0.094339.
+2022-07-06 01:16:21,458 - INFO - Epoch 17/25
+2022-07-06 01:16:21,755 - INFO - The train loss is 0.079954. The valid loss is 0.073839.
+2022-07-06 01:16:21,760 - INFO - Epoch 18/25
+2022-07-06 01:16:22,056 - INFO - The train loss is 0.066363. The valid loss is 0.063508.
+2022-07-06 01:16:22,061 - INFO - Epoch 19/25
+2022-07-06 01:16:22,356 - INFO - The train loss is 0.059160. The valid loss is 0.058613.
+2022-07-06 01:16:22,361 - INFO - Epoch 20/25
+2022-07-06 01:16:22,661 - INFO - The train loss is 0.055466. The valid loss is 0.052900.
+2022-07-06 01:16:22,665 - INFO - Epoch 21/25
+2022-07-06 01:16:22,964 - INFO - The train loss is 0.050664. The valid loss is 0.047149.
+2022-07-06 01:16:22,968 - INFO - Epoch 22/25
+2022-07-06 01:16:23,266 - INFO - The train loss is 0.046741. The valid loss is 0.044802.
+2022-07-06 01:16:23,270 - INFO - Epoch 23/25
+2022-07-06 01:16:23,566 - INFO - The train loss is 0.044808. The valid loss is 0.043196.
+2022-07-06 01:16:23,570 - INFO - Epoch 24/25
+2022-07-06 01:16:23,866 - INFO - The train loss is 0.042582. The valid loss is 0.040772.
+2022-07-06 01:16:24,814 - INFO - The mean squared error of ['top', 'bottom'] is [0.01083139 0.03292999]
+2022-07-06 01:16:24,851 - INFO - The predicted top is: 58.04943469801896
+2022-07-06 01:16:24,866 - INFO - The predicted bottom is: 56.81518738441453
