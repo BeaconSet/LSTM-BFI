@@ -41,3 +41,5 @@ If you want to use this model for other proposes, ***please make sure your datas
 <p align="center">
   <img src="/g2tau.PNG/">
 </p>
+
+***For privacy reasons, dataset has been moved to our lab google drive, please download from　M2>劉>DCSデータ.***
