@@ -4,7 +4,8 @@ Blood velocity predictor based on g2tau figures.
 *All credit to Siwei Liu from Meiji University.*
 
 # Introduction
-Diffuse correlation spectroscopy (DCS) is a noninvasive technique that derives blood flow information from measurements of the temporal intensity fluctuations of multiply scattered light. Blood flow index (BFI) and especially its variation was demonstrated to be approximately proportional to absolute blood flow. **This learning model is built on a LSTM architecture to predict BFI from DCS data.**
+Diffuse correlation spectroscopy (DCS) is a noninvasive technique that derives blood flow information from measurements of the temporal intensity fluctuations of multiply scattered light. Blood flow index (BFI) and especially its variation was demonstrated to be approximately proportional to absolute blood flow. 
+**This learning model is built on a LSTM architecture to predict BFI from DCS data.**
 <p align="center">
   <img src="/figure/g2tau1.JPG/">
 </p>
@@ -37,3 +38,6 @@ pandas
 健康医工学研究室のみなさん，ここまでご覧いただき感謝申し上げます。
 
 If you want to use this model for other proposes, ***please make sure your dataset is in .csv structure instead of a .mat file.*** 
+<p align="center">
+  <img src="/g2tau.PNG/">
+</p>
