@@ -32,6 +32,7 @@ scipy
 scikit-learn
 matplotlib
 pandas
+pytorch
 
 
 # For HSME Lab Fellows
